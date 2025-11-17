@@ -1,12 +1,12 @@
 # Default owners for everything in the repo
-* @MANISHIMWEPacifique @Karamuzi
+* @MANISHIMWEPacifique @KARAMUZI
 
 # Infrastructure code
 /terraform/ @MANISHIMWEPacifique
-/ansible/ @karamuzi
+/ansible/ @KARAMUZI
 
 # CI/CD pipelines
-/.github/workflows/ @devops-engineer
+/.github/workflows/ @rusaro isabele
 
 # Security configurations
 /security/ @security-engineer
