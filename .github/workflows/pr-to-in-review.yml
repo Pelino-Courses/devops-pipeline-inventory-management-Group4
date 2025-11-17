@@ -1,0 +1,17 @@
+name: Move Linked Issue to In Review
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  move_item:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move card to In Review
+        uses: leonsteinhaeuser/project-beta-automations@v2.0.1
+        with:
+          project-url: https://github.com/users/MANISHIMWEPacifique/projects/2
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          status: "In Review"
+          resource-node-id: ${{ github.event.pull_request.node_id }}
