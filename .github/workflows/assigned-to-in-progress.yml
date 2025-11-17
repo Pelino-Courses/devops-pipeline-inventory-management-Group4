@@ -1,0 +1,17 @@
+name: Move Assigned Issue to In Progress
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  move_item:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move card to In Progress
+        uses: leonsteinhaeuser/project-beta-automations@v2.0.1
+        with:
+          project-url: https://github.com/users/MANISHIMWEPacifique/projects/2
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          status: "In Progress"
+          resource-node-id: ${{ github.event.issue.node_id }}
