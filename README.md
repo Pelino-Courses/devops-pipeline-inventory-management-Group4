@@ -2,13 +2,11 @@
 
 This repository contains the codebase for our Inventory Management System project.
 
----
 
 ## Branching Strategy
 
 This project follows a structured Git branching model to ensure clean collaboration, stable releases, and predictable CI/CD workflows.
 
----
 
 ## Main Branches
 
@@ -18,7 +16,6 @@ Production-ready code. This branch is protected and only accepts merges from app
 ### develop
 The integration branch where all features, bug fixes, and configuration work are merged before release.
 
----
 
 ## Support Branches
 
@@ -43,7 +40,6 @@ Base branch: develop
 After testing, merged into both main and develop to keep history aligned.
 Example: release/v1.0.0
 
----
 
 ## Workflow
 
@@ -66,7 +62,6 @@ Obtain at least 2 peer reviews
 
 ### Merge the PR into develop
 
----
 
 ## Release Process
 
