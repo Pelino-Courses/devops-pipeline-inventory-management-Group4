@@ -5,12 +5,11 @@ services:
     image: mongo:7.0
     container_name: inventory-mongodb
     restart: unless-stopped
+    command: ["--noauth"]
     ports:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
-    environment:
-      MONGO_INITDB_DATABASE: inventory
     networks:
       - inventory-network
     healthcheck:
@@ -65,8 +64,6 @@ services:
 
 volumes:
   mongodb_data:
-    driver: local
 
 networks:
   inventory-network:
-    driver: bridge
