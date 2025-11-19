@@ -1,0 +1,5 @@
+# Add CVEs to ignore with justification
+
+# Example:
+# CVE-2023-12345: Low severity — no fix available in dependency chain
+# CVE-2022-99999: Ignored because it does not affect our environment
