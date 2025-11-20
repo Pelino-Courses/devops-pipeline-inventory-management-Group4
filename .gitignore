@@ -70,7 +70,7 @@ web_modules/
 .env.*
 !.env.example
 
-# parcel-bundler cache (https://parceljs.org/)
+# parcel-bundler cache (https://parceljs.com/)
 .cache
 .parcel-cache
 
@@ -138,10 +138,11 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+---
 # ============================================
 # Terraform
 # ============================================
-# Local .terraform directories
+# Local .terraform directories - Crucial for ignoring downloaded provider binaries!
 **/.terraform/*
 
 # .tfstate files contain sensitive data
@@ -172,6 +173,7 @@ terraform.rc
 # Terraform plan output files
 *.tfplan
 
+---
 # ============================================
 # Ansible
 # ============================================
@@ -194,6 +196,7 @@ terraform.rc
 # Ansible roles downloaded via galaxy
 roles/external/
 
+---
 # ============================================
 # Docker
 # ============================================
@@ -203,6 +206,7 @@ docker-compose.override.yml
 # Docker volumes data
 volumes/
 
+---
 # ============================================
 # CI/CD and Secrets
 # ============================================
@@ -222,6 +226,7 @@ id_rsa*
 # GitHub Actions local testing
 act/
 
+---
 # ============================================
 # IDE and Editors
 # ============================================
@@ -250,6 +255,7 @@ act/
 \#*\#
 .\#*
 
+---
 # ============================================
 # Operating System
 # ============================================
@@ -271,6 +277,7 @@ $RECYCLE.BIN/
 .directory
 .Trash-*
 
+---
 # ============================================
 # Cloud Provider CLI
 # ============================================
@@ -280,6 +287,7 @@ $RECYCLE.BIN/
 # AWS CLI
 .aws/
 
+---
 # ============================================
 # Temporary and Backup Files
 # ============================================
@@ -289,6 +297,7 @@ $RECYCLE.BIN/
 *.old
 *.orig
 
+---
 # ============================================
 # Build and Deployment Artifacts
 # ============================================
@@ -303,6 +312,7 @@ target/
 *.tar.gz
 *.rar
 
+---
 # ============================================
 # Testing
 # ============================================
@@ -310,12 +320,10 @@ target/
 test-results/
 *.test.log
 
+---
 # ============================================
 # Documentation
 # ============================================
 # Generated documentation (if applicable)
 docs/_build/
 site/
-# Removed: terraform/.terraform/ (Superseded by **/.terraform/*)
-# Removed: *.tfstate (Superseded by *.tfstate and *.tfstate.* higher up)
-# Removed: *.tfstate.backup (Superseded by *.tfstate.* higher up)
