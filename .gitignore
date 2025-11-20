@@ -316,6 +316,6 @@ test-results/
 # Generated documentation (if applicable)
 docs/_build/
 site/
-terraform/.terraform/
-*.tfstate
-*.tfstate.backup
+# Removed: terraform/.terraform/ (Superseded by **/.terraform/*)
+# Removed: *.tfstate (Superseded by *.tfstate and *.tfstate.* higher up)
+# Removed: *.tfstate.backup (Superseded by *.tfstate.* higher up)
