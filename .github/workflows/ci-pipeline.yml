@@ -60,6 +60,19 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }} 
 
+      - name: Setup Terraform Cloud Credentials
+        run: |
+          mkdir -p ~/.terraform.d
+          cat > ~/.terraform.d/credentials.tfrc.json << EOF
+          {
+            "credentials": {
+              "app.terraform.io": {
+                "token": "${{ secrets.TF_API_TOKEN }}"
+              }
+            }
+          }
+          EOF
+
       - name: Terraform Init (Now Authenticates with TFC)
         id: init
         run: terraform init
@@ -119,6 +132,20 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }} 
+
+
+      - name: Setup Terraform Cloud Credentials
+        run: |
+          mkdir -p ~/.terraform.d
+          cat > ~/.terraform.d/credentials.tfrc.json << EOF
+          {
+            "credentials": {
+              "app.terraform.io": {
+                "token": "${{ secrets.TF_API_TOKEN }}"
+              }
+            }
+          }
+          EOF
 
       - name: Terraform Init (Download existing state)
         run: terraform init

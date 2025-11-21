@@ -128,7 +128,7 @@ jobs:
 
       # This step saves the full JSON outputs file as a workflow artifact
       - name: Save outputs as artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: terraform-outputs
           path: terraform/terraform-outputs.json
