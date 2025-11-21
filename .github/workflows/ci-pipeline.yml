@@ -32,9 +32,7 @@ env:
   TF_WORKING_DIR: ./terraform  # Your Terraform code folder
 
 jobs:
-  # =============================================================================
-  # CI JOB: Validate and Plan (Run automatically on PR/Push)
-  # =============================================================================
+ 
   validate_and_plan:
     name: 'Terraform Validate & Plan'
     runs-on: ubuntu-latest
