@@ -199,7 +199,11 @@ jobs:
           ANSIBLE_SSH_PIPELINING: False
           ANSIBLE_SSH_ARGS: "-o ControlMaster=no -o ServerAliveInterval=60 -o ServerAliveCountMax=10"
         run: |
-          ansible-playbook playbooks/server-setup.yml -i inventory/hosts -v
+          ansible-playbook playbooks/server-setup.yml -i inventory/hosts -v \
+            -e "acr_login_server=${{ secrets.ACR_LOGIN_SERVER }}" \
+            -e "acr_username=${{ secrets.ACR_USERNAME }}" \
+            -e "acr_password=${{ secrets.ACR_PASSWORD }}" \
+            -e "image_tag=${{ needs.build-and-push.outputs.image_tag }}"
 
       - name: Wait & Verify Backend
         run: |

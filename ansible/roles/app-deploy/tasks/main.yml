@@ -1,25 +1,6 @@
 ---
 - name: Create application directory
   file:
-    path: /opt/inventory-app
-    state: directory
-    owner: "{{ ansible_user }}"
-    group: docker
-    mode: '0755'
-
-- name: Login to Azure Container Registry
-  shell: |
-    az acr login --name {{ acr_name }}
-  environment:
-    AZURE_CLIENT_ID: "{{ lookup('env', 'ARM_CLIENT_ID') }}"
-    AZURE_CLIENT_SECRET: "{{ lookup('env', 'ARM_CLIENT_SECRET') }}"
-    AZURE_TENANT_ID: "{{ lookup('env', 'ARM_TENANT_ID') }}"
-
-- name: Create docker-compose file
-  template:
-    src: docker-compose.yml.j2
-    dest: /opt/inventory-app/docker-compose.yml
-    owner: "{{ ansible_user }}"
     mode: '0644'
 
 - name: Create environment file
