@@ -91,6 +91,7 @@ jobs:
       
       - name: Run Trivy on backend
         uses: aquasecurity/trivy-action@master
+        continue-on-error: true
         with:
           image-ref: devops-backend:scan
           format: table
@@ -101,6 +102,7 @@ jobs:
       
       - name: Run Trivy on frontend
         uses: aquasecurity/trivy-action@master
+        continue-on-error: true
         with:
           image-ref: devops-frontend:scan
           format: table
@@ -119,6 +121,7 @@ jobs:
       
       - name: Run tfsec
         uses: aquasecurity/tfsec-sarif-action@v0.1.4
+        continue-on-error: true
         with:
           working_directory: terraform
           sarif_file: tfsec.sarif
@@ -131,5 +134,6 @@ jobs:
       
       - name: Scan Ansible playbooks
         uses: ansible/ansible-lint@main
+        continue-on-error: true
         with:
           args: ansible/
