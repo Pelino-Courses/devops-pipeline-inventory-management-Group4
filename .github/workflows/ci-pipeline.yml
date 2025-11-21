@@ -93,16 +93,16 @@ jobs:
   # CD JOB: Apply and Destroy (Run manually via workflow_dispatch)
   # =============================================================================
   apply_and_destroy:
-    name: 'Terraform Apply/Destroy (${{ github.event.inputs.action }})'
+    name: 'Terraform Apply/Destroy'
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' 
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'))
     needs: validate_and_plan
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.environment || 'dev' }}
 
     env:
       PROJECT_NAME: devopspipeline
       ADMIN_USERNAME: azureuser
-      ENVIRONMENT_NAME: ${{ github.event.inputs.environment }} 
+      ENVIRONMENT_NAME: ${{ github.event.inputs.environment || 'dev' }}
       # 💥 CRITICAL FIX: Expose Terraform Cloud API Token for 'terraform init' authentication
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }} 
 
@@ -131,7 +131,7 @@ jobs:
           path: ${{ env.TF_WORKING_DIR }}
 
       - name: Terraform Apply (Controlled Execution)
-        if: github.event.inputs.action == 'apply'
+        if: github.event.inputs.action == 'apply' || github.event_name == 'push'
         run: |
           terraform apply \
             -auto-approve \
