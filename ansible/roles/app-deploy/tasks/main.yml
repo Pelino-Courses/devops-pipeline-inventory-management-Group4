@@ -62,10 +62,47 @@
     remove_orphans: true
   become: yes
   register: docker_result
+  ignore_errors: yes
 
 - name: Display container status
   debug:
     var: docker_result
+
+- name: Get container logs on failure
+  shell: |
+    echo "=== MongoDB Logs ==="
+    docker logs inventory-mongodb --tail 50 2>&1 || echo "MongoDB container not found"
+    echo ""
+    echo "=== Backend Logs ==="
+    docker logs inventory-backend --tail 50 2>&1 || echo "Backend container not found"
+    echo ""
+    echo "=== Frontend Logs ==="
+    docker logs inventory-frontend --tail 50 2>&1 || echo "Frontend container not found"
+    echo ""
+    echo "=== Container Status ==="
+    docker ps -a --filter "name=inventory-"
+  become: yes
+  when: docker_result.failed is defined and docker_result.failed
+  register: container_logs
+
+- name: Display container logs
+  debug:
+    var: container_logs.stdout_lines
+  when: docker_result.failed is defined and docker_result.failed
+
+- name: Check if containers are running
+  shell: docker ps --filter "name=inventory-" --format "{{.Names}}: {{.Status}}"
+  become: yes
+  register: running_containers
+
+- name: Display running containers
+  debug:
+    var: running_containers.stdout_lines
+
+- name: Fail if containers didn't start
+  fail:
+    msg: "Containers failed to start. Check logs above for details."
+  when: docker_result.failed is defined and docker_result.failed
 
 - name: Wait for backend to be ready
   uri:
