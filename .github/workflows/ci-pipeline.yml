@@ -131,7 +131,7 @@ jobs:
           path: ${{ env.TF_WORKING_DIR }}
 
       - name: Terraform Apply (Controlled Execution)
-        if: github.event.inputs.action == 'apply'
+        if: github.event.inputs.action == 'apply' || github.event_name == 'push'
         run: |
           terraform apply \
             -auto-approve \
