@@ -96,6 +96,11 @@ resource "azurerm_network_security_group" "main" {
 resource "azurerm_subnet_network_security_group_association" "main" {
   subnet_id                 = azurerm_subnet.vm_subnet.id
   network_security_group_id = azurerm_network_security_group.main.id
+
+  depends_on = [
+    azurerm_subnet.vm_subnet,
+    azurerm_network_security_group.main
+  ]
 }
 
 # Public IP for VM
@@ -180,13 +185,4 @@ resource "azurerm_container_registry" "main" {
   admin_enabled       = true    # Note: Admin account is generally not needed if using Managed Identity
 
   tags = azurerm_resource_group.main.tags
-}
-
-# Role assignment for VM to pull from ACR
-resource "azurerm_role_assignment" "acr_pull" {
-  # Role assignment scope is the ACR
-  scope                = azurerm_container_registry.main.id
-  role_definition_name = "AcrPull"
-  # Principal ID comes from the System Assigned Identity of the VM
-  principal_id         = azurerm_linux_virtual_machine.main.identity[0].principal_id
 }
