@@ -226,7 +226,7 @@ jobs:
       - name: Test Backend API
         run: |
           curl -f http://${{ secrets.VM_PUBLIC_IP }}:5000/health
-          curl -f http://${{ secrets.VM_PUBLIC_IP }}:5000/api
+          curl -f http://${{ secrets.VM_PUBLIC_IP }}:5000/api/inventory
 
       - name: Deployment Success Notification
         run: echo "🎉 Deployment successful!"
