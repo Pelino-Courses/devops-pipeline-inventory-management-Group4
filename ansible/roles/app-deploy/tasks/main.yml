@@ -28,11 +28,31 @@
 #     owner: "{{ ansible_user }}"
 #     mode: '0600'
 
-- name: Pull latest images
+- name: Stop existing containers (if any)
   community.docker.docker_compose_v2:
     project_src: /opt/inventory-app
-    pull: always
+    state: stopped
   become: yes
+  ignore_errors: yes
+
+- name: Remove existing containers
+  community.docker.docker_compose_v2:
+    project_src: /opt/inventory-app
+    state: absent
+    remove_orphans: true
+  become: yes
+  ignore_errors: yes
+
+- name: Pull latest images
+  shell: |
+    cd /opt/inventory-app
+    docker compose pull
+  become: yes
+  register: pull_result
+
+- name: Display pull result
+  debug:
+    var: pull_result.stdout_lines
 
 - name: Start application containers
   community.docker.docker_compose_v2:
@@ -41,6 +61,11 @@
     recreate: always
     remove_orphans: true
   become: yes
+  register: docker_result
+
+- name: Display container status
+  debug:
+    var: docker_result
 
 - name: Wait for backend to be ready
   uri:
