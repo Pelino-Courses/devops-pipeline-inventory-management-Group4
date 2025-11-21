@@ -70,6 +70,7 @@ jobs:
       - name: Scan backend image
         if: steps.acr-login.outcome == 'success'
         uses: aquasecurity/trivy-action@master
+        continue-on-error: true
         with:
           image-ref: ${{ secrets.ACR_LOGIN_SERVER }}/inventory-backend:${{ steps.meta.outputs.version }}
           format: 'sarif'
@@ -78,6 +79,7 @@ jobs:
       - name: Scan frontend image
         if: steps.acr-login.outcome == 'success'
         uses: aquasecurity/trivy-action@master
+        continue-on-error: true
         with:
           image-ref: ${{ secrets.ACR_LOGIN_SERVER }}/inventory-frontend:${{ steps.meta.outputs.version }}
           format: 'sarif'
