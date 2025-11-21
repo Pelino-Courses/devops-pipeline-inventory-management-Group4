@@ -212,7 +212,7 @@ jobs:
 
       - name: Verify Frontend
         run: |
-          curl -f http://${{ secrets.VM_PUBLIC_IP }}
+          curl -f http://${{ secrets.VM_PUBLIC_IP }}:3000
 
   post-deployment:
     name: Post Deployment Tests
@@ -221,7 +221,7 @@ jobs:
 
     steps:
       - name: Test Frontend
-        run: curl -f http://${{ secrets.VM_PUBLIC_IP }}
+        run: curl -f http://${{ secrets.VM_PUBLIC_IP }}:3000
 
       - name: Test Backend API
         run: |
