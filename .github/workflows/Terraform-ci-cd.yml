@@ -37,13 +37,15 @@ jobs:
   validate_and_plan:
     name: 'Terraform Validate & Plan'
     runs-on: ubuntu-latest
+    # Note: Added 'workflow_dispatch' here to allow plan execution in the CI job when triggered manually
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
 
     env:
       # Default variables from terraform/variables.tf
       PROJECT_NAME: devopspipeline
       ADMIN_USERNAME: azureuser
-      ENVIRONMENT_NAME: ${{ github.event.inputs.environment || 'dev' }} # Default environment for CI validation
+      # Use input environment if manual, otherwise default to 'dev'
+      ENVIRONMENT_NAME: ${{ github.event.inputs.environment || 'dev' }} 
       # FIX 2: Correctly referencing the GitHub Secret for TFC auth
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }} 
 
@@ -92,7 +94,6 @@ jobs:
           retention-days: 1
 
 
-
   # =============================================================================
   # CD JOB: Apply and Destroy (Run manually via workflow_dispatch)
   # =============================================================================
@@ -110,7 +111,7 @@ jobs:
       ADMIN_USERNAME: azureuser
       # Use environment input from the manual trigger
       ENVIRONMENT_NAME: ${{ github.event.inputs.environment }} 
-      # Already correct
+      # This is correct
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }} 
 
     steps:
