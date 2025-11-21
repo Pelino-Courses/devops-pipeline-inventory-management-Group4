@@ -124,9 +124,8 @@ jobs:
         if: github.event.inputs.action == 'apply' || github.event_name == 'push'
         run: |
           echo "Deleting resource group to ensure clean state..."
-          az group delete --name ${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT_NAME }}-rg --yes --no-wait || true
-          echo "Deletion initiated. Waiting for resources to be released..."
-          sleep 60 # Give Azure some time to mark resources for deletion
+          az group delete --name ${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT_NAME }}-rg --yes || true
+          echo "Deletion completed."
         working-directory: ${{ env.TF_WORKING_DIR }} 
 
       - name: Terraform Init (Download existing state)
