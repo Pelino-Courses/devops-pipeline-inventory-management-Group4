@@ -97,12 +97,12 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')) 
     needs: validate_and_plan
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.environment || 'dev' }}
 
     env:
       PROJECT_NAME: devopspipeline
       ADMIN_USERNAME: azureuser
-      ENVIRONMENT_NAME: ${{ github.event.inputs.environment }} 
+      ENVIRONMENT_NAME: ${{ github.event.inputs.environment || 'dev' }} 
       # 💥 CRITICAL FIX: Expose Terraform Cloud API Token for 'terraform init' authentication
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }} 
 
