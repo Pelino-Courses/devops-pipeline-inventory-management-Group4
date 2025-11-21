@@ -26,6 +26,7 @@ jobs:
 
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
+        continue-on-error: false
         with:
           login-server: ${{ secrets.ACR_LOGIN_SERVER }}
           username: ${{ secrets.ACR_USERNAME }}
@@ -75,10 +76,11 @@ jobs:
           output: 'trivy-frontend-results.sarif'
 
       - name: Upload Trivy Scan Results
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
+        continue-on-error: true
         if: always()
         with:
-          sarif_file: '.'
+          sarif_file: 'trivy-*-results.sarif'
 
   deploy:
     name: Deploy to Azure VM
