@@ -55,8 +55,6 @@ jobs:
           tags: |
             ${{ secrets.ACR_LOGIN_SERVER }}/inventory-backend:${{ steps.meta.outputs.version }}
             ${{ secrets.ACR_LOGIN_SERVER }}/inventory-backend:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Build and push frontend image
         if: steps.acr-login.outcome == 'success'
@@ -67,8 +65,6 @@ jobs:
           tags: |
             ${{ secrets.ACR_LOGIN_SERVER }}/inventory-frontend:${{ steps.meta.outputs.version }}
             ${{ secrets.ACR_LOGIN_SERVER }}/inventory-frontend:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       # Optional Scans
       - name: Scan backend image
