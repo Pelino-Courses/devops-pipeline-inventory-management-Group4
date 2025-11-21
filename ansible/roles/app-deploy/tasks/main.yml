@@ -8,32 +8,6 @@
     mode: '0755'
 
 - name: Login to Azure Container Registry
-  community.docker.docker_login:
-    registry_url: "{{ acr_login_server }}"
-    username: "{{ acr_username }}"
-    password: "{{ acr_password }}"
-    reauthorize: yes
-
-- name: Create docker-compose file
-  template:
-    src: docker-compose.yml.j2
-    dest: /opt/inventory-app/docker-compose.yml
-    owner: "{{ ansible_user }}"
-    mode: '0644'
-
-- name: Create environment file
-  template:
-    src: .env.j2
-    dest: /opt/inventory-app/.env
-    owner: "{{ ansible_user }}"
-    mode: '0600'
-
-- name: Pull latest images
-  community.docker.docker_compose_v2:
-    project_src: /opt/inventory-app
-    pull: always
-
-- name: Start application containers
   community.docker.docker_compose_v2:
     project_src: /opt/inventory-app
     state: present
