@@ -22,6 +22,7 @@
   roles:
     - security
     - docker
+    - nginx
     - app-deploy
 
   post_tasks:
@@ -38,5 +39,6 @@
       debug:
         msg:
           - "Deployment completed successfully 🎉"
-          - "Frontend URL: http://{{ ansible_host }}:3000"
-          - "Backend URL: http://{{ ansible_host }}:5000/api"
+          - "Application URL: http://{{ ansible_host }}"
+          - "Frontend (direct): http://{{ ansible_host }}:3000"
+          - "Backend (direct): http://{{ ansible_host }}:5000/api"
