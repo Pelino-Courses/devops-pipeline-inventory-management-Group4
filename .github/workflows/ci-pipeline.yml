@@ -191,3 +191,47 @@ jobs:
             -var="admin_username=${{ env.ADMIN_USERNAME }}" \
             -var="ssh_public_key=${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}"
         working-directory: ${{ env.TF_WORKING_DIR }}
+
+  terraform-apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    concurrency: env-production
+    needs: [terraform-plan, terraform-security]
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+    environment:
+      name: production
+    env:
+      TF_WORKING_DIR: ./terraform
+      # Default variables from terraform/variables.tf
+      PROJECT_NAME: devopspipeline
+      ADMIN_USERNAME: azureuser
+      ENVIRONMENT_NAME: ${{ github.event.inputs.environment || 'dev' }}
+      # 💥 CRITICAL FIX: Expose Terraform Cloud API Token for 'terraform init' authentication
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }} 
+      # Explicitly set Azure credentials for Terraform backend auth
+      ARM_CLIENT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+      ARM_CLIENT_SECRET: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
+      ARM_SUBSCRIPTION_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}
+      ARM_TENANT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }} 
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Init
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform init -input=false
+
+      - name: Plan (fresh)
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform plan -input=false -out=tfplan
+
+      - name: Apply
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform apply -input=false -auto-approve tfplan

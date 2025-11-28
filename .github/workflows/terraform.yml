@@ -90,10 +90,9 @@ jobs:
   terraform-apply:
     name: Terraform Apply
     runs-on: ubuntu-latest
-    # This job requires both the plan and security checks to succeed
     needs: [terraform-plan, terraform-security] 
-    # CRITICAL: Only runs if the event is a 'push' and the branch is 'main'
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # Allow push on main OR manual workflow_dispatch
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
     environment:
       # Optional: Use a production environment for protection rules
       name: production 
