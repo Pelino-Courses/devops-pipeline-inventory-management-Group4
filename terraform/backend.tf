@@ -14,7 +14,7 @@ terraform {
 
   backend "azurerm" {
     resource_group_name  = "terraform-state-rg"
-    storage_account_name = "tfstatedevopsgroup4"
+    storage_account_name = "tfdevops8698"
     container_name       = "tfstate"
     key                  = "devops-pipeline.tfstate"
   }

@@ -4,7 +4,7 @@
 $RESOURCE_GROUP="terraform-state-rg"
 $STORAGE_ACCOUNT="tfdevops$(Get-Random -Minimum 1000 -Maximum 9999)"  # Random suffix to ensure uniqueness
 $CONTAINER_NAME="tfstate"
-$LOCATION="westeurope"  # West Europe is commonly available for student subscriptions
+$LOCATION="southafricanorth"  # South Africa North is available for this student subscription
 
 Write-Host "=== Creating Azure Storage for Terraform State ===" -ForegroundColor Cyan
 Write-Host "Storage Account Name: $STORAGE_ACCOUNT" -ForegroundColor Yellow
