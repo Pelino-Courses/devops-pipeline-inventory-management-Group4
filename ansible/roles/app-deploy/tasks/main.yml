@@ -88,6 +88,7 @@
   when: docker_result.failed is defined and docker_result.failed
 
 - name: Wait for backend to be ready
+  # checkov:skip=CKV2_ANSIBLE_1:Using HTTP for local health check
   uri:
     url: "http://localhost:5000/health"
     status_code: 200
@@ -97,6 +98,7 @@
   delay: 2
 
 - name: Wait for frontend to be ready
+  # checkov:skip=CKV2_ANSIBLE_1:Using HTTP for local health check
   uri:
     url: "http://localhost:3000"
     status_code: 200
