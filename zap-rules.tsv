@@ -1,0 +1,10 @@
+# ZAP Scanning Rules Configuration
+# Format: <rule_id>	<threshold>	<description>
+# Thresholds: IGNORE, INFO, LOW, MEDIUM, HIGH
+# Example: 10021	IGNORE	X-Content-Type-Options Header Missing
+
+# Common rules to customize (currently using defaults)
+# 10021	MEDIUM	X-Content-Type-Options Header Missing
+# 10038	MEDIUM	Content Security Policy (CSP) Header Not Set
+# 10020	MEDIUM	Missing Anti-clickjacking Header
+# 10063	INFO	Permissions Policy Header Not Set

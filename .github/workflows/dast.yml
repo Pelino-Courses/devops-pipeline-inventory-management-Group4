@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: '0 3 * * 0'  # Weekly on Sunday at 3 AM
 
+permissions:
+  contents: read
+  issues: write  # Required for ZAP to create GitHub issues with scan results
+
 jobs:
   zap-scan:
     name: OWASP ZAP Security Scan
@@ -19,7 +23,6 @@ jobs:
         uses: zaproxy/action-baseline@v0.10.0
         with:
           target: 'http://${{ secrets.VM_PUBLIC_IP }}:${{ secrets.APP_PORT }}'
-          rules_file_name: 'zap-rules.tsv'
           cmd_options: '-a'   # Attack mode: spider + passive scan
 
       - name: Upload ZAP results
